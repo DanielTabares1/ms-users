@@ -5,5 +5,5 @@ import com.daniel.ms_users.infrastructure.output.jpa.entity.RoleEntity;
 
 
 public interface RoleEntityMapper {
-    Role toRole(RoleEntity roleEntity);
+        Role toRole(RoleEntity roleEntity);
 }

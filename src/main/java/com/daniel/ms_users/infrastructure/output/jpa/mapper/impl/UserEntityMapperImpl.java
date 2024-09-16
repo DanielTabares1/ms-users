@@ -1,5 +1,6 @@
 package com.daniel.ms_users.infrastructure.output.jpa.mapper.impl;
 
+import com.daniel.ms_users.domain.model.Role;
 import com.daniel.ms_users.domain.model.User;
 import com.daniel.ms_users.infrastructure.output.jpa.entity.RoleEntity;
 import com.daniel.ms_users.infrastructure.output.jpa.entity.UserEntity;
@@ -29,6 +30,31 @@ public class UserEntityMapperImpl implements UserEntityMapper {
                 user.getBirthDate(),
                 user.getEmail(),
                 user.getPassword(),
+                role
+        );
+    }
+
+    @Override
+    public User toUser(UserEntity userEntity) {
+        if (userEntity == null) {
+            return null;
+        }
+
+        Role role = new Role(
+                userEntity.getRole().getId(),
+                userEntity.getRole().getName(),
+                userEntity.getRole().getDescription()
+        );
+
+        return new User(
+                userEntity.getId(),
+                userEntity.getName(),
+                userEntity.getLastName(),
+                userEntity.getDocumentNumber(),
+                userEntity.getCellphone(),
+                userEntity.getBirthDate(),
+                userEntity.getEmail(),
+                userEntity.getPassword(),
                 role
         );
     }

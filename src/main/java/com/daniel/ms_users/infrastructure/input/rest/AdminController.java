@@ -1,8 +1,8 @@
 package com.daniel.ms_users.infrastructure.input.rest;
 
 import com.daniel.ms_users.application.dto.OwnerRequest;
-import com.daniel.ms_users.application.exception.UserUnderageException;
 import com.daniel.ms_users.application.handler.IOwnerHandler;
+import com.daniel.ms_users.domain.model.User;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
@@ -31,14 +31,9 @@ public class AdminController {
             @ApiResponse(responseCode = "403", description = "You are not authorized to use this function"),
             @ApiResponse(responseCode = "400", description = "Bad request, verify the data you are sending")
     })
-    public ResponseEntity<String> addNewOwner(@Valid @RequestBody OwnerRequest ownerRequest){
-        try{
-            ownerHandler.saveOwner(ownerRequest);
-        }
-        catch (UserUnderageException e){
-            return new ResponseEntity<>("User must be over 18 years", HttpStatus.BAD_REQUEST);
-        }
-        return new ResponseEntity<>("Succesfully created Owner", HttpStatus.CREATED);
+    public ResponseEntity<User> addNewOwner(@Valid @RequestBody OwnerRequest ownerRequest){
+        User newUser = ownerHandler.saveOwner(ownerRequest);
+        return new ResponseEntity<>(newUser, HttpStatus.CREATED);
     }
 
 }

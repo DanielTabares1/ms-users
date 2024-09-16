@@ -15,13 +15,9 @@ public class UserJpaAdapter implements IUserPersistencePort {
     private final IUserRepository userRepository;
     private final UserEntityMapper userEntityMapper;
 
-    @Autowired
-    private PasswordEncoder passwordEncoder;
-
     @Override
-    public void saveUser(User user) {
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
+    public User saveUser(User user) {
         UserEntity userEntity = userEntityMapper.toEntity(user);
-        userRepository.save(userEntity);
+        return userEntityMapper.toUser(userRepository.save(userEntity));
     }
 }
