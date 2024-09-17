@@ -4,6 +4,7 @@ import com.daniel.ms_users.application.dto.OwnerRequest;
 import com.daniel.ms_users.application.handler.IOwnerHandler;
 import com.daniel.ms_users.domain.model.User;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import jakarta.validation.Valid;
@@ -24,12 +25,16 @@ public class AdminController {
 
     @PostMapping("/owner")
     @Operation(
-            summary = "Creates a new user with role Owner",
-            description = "An administrator can create a Owner for management of restaurants"   )
+            summary = "Creates a new Owner user",
+            description = "An administrator can create a new Owner to manage restaurants."
+    )
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "201", description = "Successfully created Owner"),
-            @ApiResponse(responseCode = "403", description = "You are not authorized to use this function"),
-            @ApiResponse(responseCode = "400", description = "Bad request, verify the data you are sending")
+            @ApiResponse(responseCode = "201", description = "Owner successfully created",
+                    content = @Content(mediaType = "application/json")),
+            @ApiResponse(responseCode = "403", description = "Unauthorized to access this function",
+                    content = @Content),
+            @ApiResponse(responseCode = "400", description = "Invalid request data",
+                    content = @Content)
     })
     public ResponseEntity<User> addNewOwner(@Valid @RequestBody OwnerRequest ownerRequest){
         User newUser = ownerHandler.saveOwner(ownerRequest);

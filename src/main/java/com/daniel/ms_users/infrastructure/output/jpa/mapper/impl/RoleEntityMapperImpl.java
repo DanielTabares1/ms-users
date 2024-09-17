@@ -21,6 +21,4 @@ public class RoleEntityMapperImpl implements RoleEntityMapper {
 
         return role;
     }
-
-
 }
