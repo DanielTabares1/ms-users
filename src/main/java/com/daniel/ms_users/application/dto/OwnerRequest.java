@@ -3,6 +3,7 @@ package com.daniel.ms_users.application.dto;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -16,7 +17,8 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 public class OwnerRequest {
-    @NotBlank
+    @NotBlank(message = "Restaurant name cannot be empty")
+    @Pattern(regexp = "^(?![0-9]*$)[A-Za-z0-9]+$", message = "Restaurant name must contain at least one letter and can include numbers")
     private String name;
 
     @NotBlank

@@ -1,5 +1,6 @@
 package com.daniel.ms_users.infrastructure.config;
 
+import com.daniel.ms_users.application.handler.IUserHandler;
 import com.daniel.ms_users.application.util.PasswordEncoderUtil;
 import com.daniel.ms_users.application.util.UserValidationImpl;
 import com.daniel.ms_users.application.util.UserValidations;
@@ -61,5 +62,6 @@ public class BeanConfiguration {
     public PasswordEncoderUtil passwordEncoderUtil(){
         return new PasswordEncoderImpl(passwordEncoder);
     }
+
 
 }
