@@ -21,4 +21,9 @@ public class UserUseCase implements IUserServicePort {
     public User getUserById(Long id) {
         return userPersistencePort.getUserById(id);
     }
+
+    @Override
+    public boolean existByEmail(String email) {
+        return userPersistencePort.existByEmail(email);
+    }
 }

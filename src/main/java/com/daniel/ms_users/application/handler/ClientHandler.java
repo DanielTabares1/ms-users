@@ -1,6 +1,7 @@
 package com.daniel.ms_users.application.handler;
 
 import com.daniel.ms_users.application.dto.ClientRequest;
+import com.daniel.ms_users.application.exception.EmailAlreadyInUseException;
 import com.daniel.ms_users.application.mapper.IClientRequestMapper;
 import com.daniel.ms_users.application.util.PasswordEncoderUtil;
 import com.daniel.ms_users.domain.api.IRoleServicePort;
@@ -24,7 +25,9 @@ public class ClientHandler implements IClientHandler{
 
     @Override
     public User saveClient(ClientRequest clientRequest) {
-        //todo - verify not existing client by email
+        if ( userServicePort.existByEmail(clientRequest.getEmail())){
+            throw new EmailAlreadyInUseException("Email " + clientRequest.getEmail() + " is already assigned to an account");
+        }
         Role role = roleServicePort.getRoleByName("CLIENT");
         User user = clientRequestMapper.toModel(clientRequest);
         user.setRole(role);

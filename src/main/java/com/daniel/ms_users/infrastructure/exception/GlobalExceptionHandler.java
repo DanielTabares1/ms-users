@@ -1,5 +1,6 @@
 package com.daniel.ms_users.infrastructure.exception;
 
+import com.daniel.ms_users.application.exception.EmailAlreadyInUseException;
 import com.daniel.ms_users.application.exception.UserUnderageException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -40,6 +41,11 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(UserUnderageException.class)
     public ResponseEntity<String> handleUserUnderageException(UserUnderageException ex) {
+        return new ResponseEntity<>(ex.getMessage(), HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(EmailAlreadyInUseException.class)
+    public ResponseEntity<String> handleEmailAlreadyInUseException(EmailAlreadyInUseException ex) {
         return new ResponseEntity<>(ex.getMessage(), HttpStatus.BAD_REQUEST);
     }
 

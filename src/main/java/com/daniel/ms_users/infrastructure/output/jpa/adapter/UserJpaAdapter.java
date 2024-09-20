@@ -27,4 +27,9 @@ public class UserJpaAdapter implements IUserPersistencePort {
         );
         return userEntityMapper.toUser(userEntity);
     }
+
+    @Override
+    public boolean existByEmail(String email) {
+        return userRepository.existsByEmail(email);
+    }
 }
