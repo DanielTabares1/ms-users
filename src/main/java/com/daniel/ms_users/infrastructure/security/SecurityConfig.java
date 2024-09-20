@@ -2,7 +2,6 @@ package com.daniel.ms_users.infrastructure.security;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpMethod;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
@@ -25,8 +24,8 @@ public class SecurityConfig {
     SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(authz -> authz
-                        .requestMatchers(HttpMethod.POST, "/api/v1/admin/**")
-                        .hasRole("ADMIN")
+                        .requestMatchers( "/api/v1/admin/**").hasRole("ADMIN")
+                        .requestMatchers("/api/v1/owner/**").hasRole("OWNER")
                         .anyRequest()
                         .authenticated()
                 )
@@ -40,6 +39,9 @@ public class SecurityConfig {
         manager.createUser(User.withUsername("admin")
                 .password( passwordEncoder().encode("12345"))
                 .roles("ADMIN").build());
+        manager.createUser(User.withUsername("owner")
+                .password( passwordEncoder().encode("12345"))
+                .roles("OWNER").build());
         return manager;
     }
 

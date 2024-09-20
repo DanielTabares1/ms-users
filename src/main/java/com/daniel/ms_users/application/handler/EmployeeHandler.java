@@ -1,10 +1,8 @@
 package com.daniel.ms_users.application.handler;
 
-import com.daniel.ms_users.application.dto.OwnerRequest;
-import com.daniel.ms_users.application.exception.UserUnderageException;
-import com.daniel.ms_users.application.mapper.OwnerRequestMapper;
+import com.daniel.ms_users.application.dto.EmployeeRequest;
+import com.daniel.ms_users.application.mapper.IEmployeeRequestMapper;
 import com.daniel.ms_users.application.util.PasswordEncoderUtil;
-import com.daniel.ms_users.application.util.UserValidations;
 import com.daniel.ms_users.domain.api.IRoleServicePort;
 import com.daniel.ms_users.domain.api.IUserServicePort;
 import com.daniel.ms_users.domain.model.Role;
@@ -16,25 +14,19 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @RequiredArgsConstructor
 @Transactional
-public class OwnerHandler implements IOwnerHandler{
+public class EmployeeHandler implements IEmployeeHandler {
 
     private final IUserServicePort userServicePort;
     private final IRoleServicePort roleServicePort;
-    private final OwnerRequestMapper ownerRequestMapper;
-    private final UserValidations userValidations;
+    private final IEmployeeRequestMapper employeeRequestMapper;
     private final PasswordEncoderUtil passwordEncoderUtil;
 
     @Override
-    public User saveOwner(OwnerRequest ownerRequest) {
-        Role role = roleServicePort.getRoleByName("OWNER");
-        User user = ownerRequestMapper.toUser(ownerRequest);
-        if(!userValidations.isAdult(user)){
-            throw new UserUnderageException();
-        }
+    public User saveEmployee(EmployeeRequest employeeRequest) {
+        Role role = roleServicePort.getRoleByName("EMPLOYEE");
+        User user = employeeRequestMapper.toModel(employeeRequest);
         user.setRole(role);
         user.setPassword(passwordEncoderUtil.encode(user.getPassword()));
         return userServicePort.saveUser(user);
     }
-
-
 }
