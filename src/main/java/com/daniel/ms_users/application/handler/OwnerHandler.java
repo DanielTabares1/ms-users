@@ -4,7 +4,6 @@ import com.daniel.ms_users.application.dto.OwnerRequest;
 import com.daniel.ms_users.application.exception.UserUnderageException;
 import com.daniel.ms_users.application.mapper.OwnerRequestMapper;
 import com.daniel.ms_users.application.util.PasswordEncoderUtil;
-import com.daniel.ms_users.application.util.UserValidationImpl;
 import com.daniel.ms_users.application.util.UserValidations;
 import com.daniel.ms_users.domain.api.IRoleServicePort;
 import com.daniel.ms_users.domain.api.IUserServicePort;
