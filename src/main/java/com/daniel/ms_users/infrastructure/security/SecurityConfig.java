@@ -24,6 +24,7 @@ public class SecurityConfig {
     SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(authz -> authz
+                        .requestMatchers("/api/v1/clients/register").permitAll()
                         .requestMatchers( "/api/v1/admin/**").hasRole("ADMIN")
                         .requestMatchers("/api/v1/owner/**").hasRole("OWNER")
                         .anyRequest()
@@ -42,6 +43,15 @@ public class SecurityConfig {
         manager.createUser(User.withUsername("owner")
                 .password( passwordEncoder().encode("12345"))
                 .roles("OWNER").build());
+        manager.createUser(User.withUsername("employee")
+                .password( passwordEncoder().encode("12345"))
+                .roles("EMPLOYEE").build());
+        manager.createUser(User.withUsername("client")
+                .password( passwordEncoder().encode("12345"))
+                .roles("CLIENT").build());
+        manager.createUser(User.withUsername("none")
+                .password( passwordEncoder().encode("12345"))
+                .roles("NONE").build());
         return manager;
     }
 
