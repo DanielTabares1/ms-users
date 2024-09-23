@@ -29,8 +29,8 @@ public class ClientHandler implements IClientHandler {
         if (userServicePort.existByEmail(clientRequest.getEmail())) {
             throw new EmailAlreadyInUseException("Email " + clientRequest.getEmail() + " is already assigned to an account");
         }
-        Role role = roleServicePort.getRoleByName(UserRoles.CLIENT.toString());
         User user = clientRequestMapper.toModel(clientRequest);
+        Role role = roleServicePort.getRoleByName(UserRoles.CLIENT.toString());
         user.setRole(role);
         user.setPassword(passwordEncoderUtil.encode(user.getPassword()));
         return userServicePort.saveUser(user);
