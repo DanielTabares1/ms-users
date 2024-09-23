@@ -1,5 +1,6 @@
-package com.daniel.ms_users.application.util;
+package com.daniel.ms_users.application.util.impl;
 
+import com.daniel.ms_users.application.util.UserValidations;
 import com.daniel.ms_users.domain.model.User;
 
 import java.time.LocalDate;

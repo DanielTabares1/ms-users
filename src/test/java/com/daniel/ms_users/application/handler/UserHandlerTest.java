@@ -1,5 +1,6 @@
 package com.daniel.ms_users.application.handler;
 
+import com.daniel.ms_users.application.handler.impl.UserHandler;
 import com.daniel.ms_users.domain.api.IUserServicePort;
 import com.daniel.ms_users.domain.model.Role;
 import com.daniel.ms_users.domain.model.User;

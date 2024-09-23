@@ -1,11 +1,12 @@
-package com.daniel.ms_users.application.mapper;
+package com.daniel.ms_users.application.mapper.impl;
 
 import com.daniel.ms_users.application.dto.EmployeeRequest;
+import com.daniel.ms_users.application.mapper.IEmployeeRequestMapper;
 import com.daniel.ms_users.domain.model.User;
 import org.springframework.stereotype.Component;
 
 @Component
-public class EmployeeRequestMapper implements IEmployeeRequestMapper{
+public class EmployeeRequestMapper implements IEmployeeRequestMapper {
     @Override
     public User toModel(EmployeeRequest employeeRequest) {
         if ( employeeRequest == null ) {

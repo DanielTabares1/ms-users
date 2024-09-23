@@ -28,8 +28,8 @@ public class SecurityConfig {
             "/api/v1/auth/**",
             "/api/swagger-ui/**",
             "/v3/api-docs/**",
-            "/api/v1/users",
-            "/api/docs"
+            "/api/docs/**",
+            "/api/v1/auth",
     };
 
     @Bean
@@ -47,6 +47,7 @@ public class SecurityConfig {
                         .requestMatchers(WHITE_LIST_URL).permitAll()
                         .requestMatchers("/api/v1/admin/**").hasRole("ADMIN")
                         .requestMatchers("/api/v1/owner/**").hasRole("OWNER")
+                        .requestMatchers("/api/v1/client/**").hasRole("CLIENT")
                         .anyRequest().authenticated()
                 )
                 .formLogin(AbstractHttpConfigurer::disable)

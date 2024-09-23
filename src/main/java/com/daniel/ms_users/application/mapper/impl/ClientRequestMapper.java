@@ -1,11 +1,12 @@
-package com.daniel.ms_users.application.mapper;
+package com.daniel.ms_users.application.mapper.impl;
 
 import com.daniel.ms_users.application.dto.ClientRequest;
+import com.daniel.ms_users.application.mapper.IClientRequestMapper;
 import com.daniel.ms_users.domain.model.User;
 import org.springframework.stereotype.Component;
 
 @Component
-public class ClientRequestMapper implements IClientRequestMapper{
+public class ClientRequestMapper implements IClientRequestMapper {
     @Override
     public User toModel(ClientRequest clientRequest) {
         if ( clientRequest == null ) {

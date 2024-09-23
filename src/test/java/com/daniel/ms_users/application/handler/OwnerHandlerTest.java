@@ -2,7 +2,8 @@ package com.daniel.ms_users.application.handler;
 
 import com.daniel.ms_users.application.dto.OwnerRequest;
 import com.daniel.ms_users.application.exception.UserUnderageException;
-import com.daniel.ms_users.application.mapper.OwnerRequestMapper;
+import com.daniel.ms_users.application.handler.impl.OwnerHandler;
+import com.daniel.ms_users.application.mapper.IOwnerRequestMapper;
 import com.daniel.ms_users.application.util.PasswordEncoderUtil;
 import com.daniel.ms_users.application.util.UserValidations;
 import com.daniel.ms_users.domain.api.IRoleServicePort;
@@ -33,7 +34,7 @@ class OwnerHandlerTest {
     private IRoleServicePort roleServicePort;
 
     @Mock
-    private OwnerRequestMapper ownerRequestMapper;
+    private IOwnerRequestMapper IOwnerRequestMapper;
 
     @Mock
     private UserValidations userValidations;
@@ -58,7 +59,7 @@ class OwnerHandlerTest {
         // Mockear comportamientos
         when(roleServicePort.getRoleByName("OWNER")).thenReturn(ownerRole); // Obtener el rol OWNER
         when(passwordEncoderUtil.encode(user.getPassword())).thenReturn("encodedPassword"); // Simula el encriptado de la contraseña
-        when(ownerRequestMapper.toUser(ownerRequest)).thenReturn(user); // Convertir el OwnerRequest a User
+        when(IOwnerRequestMapper.toUser(ownerRequest)).thenReturn(user); // Convertir el OwnerRequest a User
         when(userValidations.isAdult(user)).thenReturn(true); // Validaciones del usuario (si no lanza excepciones)
         when(userServicePort.saveUser(user)).thenReturn(user);
 
@@ -68,7 +69,7 @@ class OwnerHandlerTest {
         // Verificaciones
         verify(roleServicePort, times(1)).getRoleByName("OWNER");
         verify(passwordEncoderUtil, times(1)).encode(user.getPassword());
-        verify(ownerRequestMapper, times(1)).toUser(ownerRequest);
+        verify(IOwnerRequestMapper, times(1)).toUser(ownerRequest);
         verify(userValidations, times(1)).isAdult(user);
         verify(userServicePort, times(1)).saveUser(user);
 
@@ -89,7 +90,7 @@ class OwnerHandlerTest {
         // Mockear comportamientos
         when(roleServicePort.getRoleByName("OWNER")).thenReturn(ownerRole); // Obtener el rol OWNER
         when(passwordEncoderUtil.encode(user.getPassword())).thenReturn("encodedPassword"); // Simula el encriptado de la contraseña
-        when(ownerRequestMapper.toUser(ownerRequest)).thenReturn(user); // Convertir el OwnerRequest a User
+        when(IOwnerRequestMapper.toUser(ownerRequest)).thenReturn(user); // Convertir el OwnerRequest a User
         when(userValidations.isAdult(user)).thenReturn(false); // Simular que el usuario no es adulto
 
 
@@ -100,7 +101,7 @@ class OwnerHandlerTest {
 
         // Verificaciones
         verify(roleServicePort, times(1)).getRoleByName("OWNER");
-        verify(ownerRequestMapper, times(1)).toUser(ownerRequest);
+        verify(IOwnerRequestMapper, times(1)).toUser(ownerRequest);
         verify(userValidations, times(1)).isAdult(user);
         verify(passwordEncoderUtil, never()).encode(user.getPassword());
         verify(userServicePort, never()).saveUser(user); // Verificar que nunca se guarda el usuario, ya que es menor de edad

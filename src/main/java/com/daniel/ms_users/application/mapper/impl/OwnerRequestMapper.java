@@ -1,11 +1,12 @@
-package com.daniel.ms_users.application.mapper;
+package com.daniel.ms_users.application.mapper.impl;
 
 import com.daniel.ms_users.application.dto.OwnerRequest;
+import com.daniel.ms_users.application.mapper.IOwnerRequestMapper;
 import com.daniel.ms_users.domain.model.User;
 import org.springframework.stereotype.Component;
 
 @Component
-public class OwnerRequestMapperImpl implements OwnerRequestMapper{
+public class OwnerRequestMapper implements IOwnerRequestMapper {
     @Override
     public User toUser(OwnerRequest ownerRequest) {
         if ( ownerRequest == null ) {
