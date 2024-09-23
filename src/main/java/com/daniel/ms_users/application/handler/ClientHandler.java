@@ -8,6 +8,7 @@ import com.daniel.ms_users.domain.api.IRoleServicePort;
 import com.daniel.ms_users.domain.api.IUserServicePort;
 import com.daniel.ms_users.domain.model.Role;
 import com.daniel.ms_users.domain.model.User;
+import com.daniel.ms_users.domain.model.UserRoles;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -15,7 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @Transactional
 @RequiredArgsConstructor
-public class ClientHandler implements IClientHandler{
+public class ClientHandler implements IClientHandler {
 
     private final IUserServicePort userServicePort;
     private final IRoleServicePort roleServicePort;
@@ -25,10 +26,10 @@ public class ClientHandler implements IClientHandler{
 
     @Override
     public User saveClient(ClientRequest clientRequest) {
-        if ( userServicePort.existByEmail(clientRequest.getEmail())){
+        if (userServicePort.existByEmail(clientRequest.getEmail())) {
             throw new EmailAlreadyInUseException("Email " + clientRequest.getEmail() + " is already assigned to an account");
         }
-        Role role = roleServicePort.getRoleByName("CLIENT");
+        Role role = roleServicePort.getRoleByName(UserRoles.CLIENT.toString());
         User user = clientRequestMapper.toModel(clientRequest);
         user.setRole(role);
         user.setPassword(passwordEncoderUtil.encode(user.getPassword()));

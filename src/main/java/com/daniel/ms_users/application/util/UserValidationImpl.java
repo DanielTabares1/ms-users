@@ -6,7 +6,7 @@ import java.time.LocalDate;
 import java.time.Period;
 import java.time.ZoneId;
 
-public class UserValidationImpl implements UserValidations{
+public class UserValidationImpl implements UserValidations {
     @Override
     public boolean isAdult(User user) {
         LocalDate birthDate = user.getBirthDate().toInstant()
@@ -18,6 +18,4 @@ public class UserValidationImpl implements UserValidations{
         int age = Period.between(birthDate, currentDate).getYears();
         return age >= 18;
     }
-
-
 }
