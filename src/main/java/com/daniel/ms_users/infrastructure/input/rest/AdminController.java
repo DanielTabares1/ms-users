@@ -13,6 +13,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -35,7 +36,8 @@ public class AdminController {
                     content = @Content),
             @ApiResponse(responseCode = "400", description = "Invalid request data",
                     content = @Content)
-    })  
+    })
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<User> addNewOwner(@Valid @RequestBody OwnerRequest ownerRequest){
         User newUser = ownerHandler.saveOwner(ownerRequest);
         return new ResponseEntity<>(newUser, HttpStatus.CREATED);

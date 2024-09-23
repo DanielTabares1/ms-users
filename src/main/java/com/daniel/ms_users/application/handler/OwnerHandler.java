@@ -26,7 +26,7 @@ public class OwnerHandler implements IOwnerHandler{
 
     @Override
     public User saveOwner(OwnerRequest ownerRequest) {
-        Role role = roleServicePort.getRoleByName("OWNER");
+        Role role = roleServicePort.getRoleByName("ROLE_OWNER");
         User user = ownerRequestMapper.toUser(ownerRequest);
         if(!userValidations.isAdult(user)){
             throw new UserUnderageException();

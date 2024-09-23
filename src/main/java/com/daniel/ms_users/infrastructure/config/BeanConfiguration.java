@@ -19,6 +19,13 @@ import com.daniel.ms_users.infrastructure.security.PasswordEncoderImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.AuthenticationProvider;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
+import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Configuration
@@ -38,27 +45,27 @@ public class BeanConfiguration {
     }
 
     @Bean
-    public IUserServicePort userServicePort(){
+    public IUserServicePort userServicePort() {
         return new UserUseCase(userPersistencePort());
     }
 
     @Bean
-    public IRolePersistencePort rolePersistencePort(){
+    public IRolePersistencePort rolePersistencePort() {
         return new RoleJpaAdapter(roleRepository, roleEntityMapper);
     }
 
     @Bean
-    public IRoleServicePort roleServicePort(){
+    public IRoleServicePort roleServicePort() {
         return new RoleUseCase(rolePersistencePort());
     }
 
     @Bean
-    public UserValidations userValidations(){
+    public UserValidations userValidations() {
         return new UserValidationImpl();
     }
 
     @Bean
-    public PasswordEncoderUtil passwordEncoderUtil(){
+    public PasswordEncoderUtil passwordEncoderUtil() {
         return new PasswordEncoderImpl(passwordEncoder);
     }
 
