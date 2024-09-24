@@ -18,4 +18,9 @@ public class UserHandler implements IUserHandler {
     public User getUserById(Long id) {
         return userServicePort.getUserById(id);
     }
+
+    @Override
+    public User getUserByEmail(String email) {
+        return userServicePort.getUserByEmail(email);
+    }
 }

@@ -51,7 +51,16 @@ public class AdminController {
         }catch (UserNotFoundException e){
             return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
         }
+    }
 
+    @GetMapping("/users/role-by-email/{email}")
+    public ResponseEntity<String> getUserByEmail(@PathVariable String email){
+        try {
+            User user = userHandler.getUserByEmail(email);
+            return new ResponseEntity<>(user.getRole().getName(), HttpStatus.OK);
+        }catch (UserNotFoundException e){
+            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+        }
     }
 
 }

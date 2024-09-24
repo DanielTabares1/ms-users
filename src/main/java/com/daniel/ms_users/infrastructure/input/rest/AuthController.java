@@ -4,7 +4,9 @@ import com.daniel.ms_users.application.dto.AuthenticationRequest;
 import com.daniel.ms_users.application.dto.AuthenticationResponse;
 import com.daniel.ms_users.application.dto.ClientRequest;
 import com.daniel.ms_users.application.handler.IClientHandler;
+import com.daniel.ms_users.application.handler.IUserHandler;
 import com.daniel.ms_users.domain.model.User;
+import com.daniel.ms_users.infrastructure.exception.UserNotFoundException;
 import com.daniel.ms_users.infrastructure.security.AuthenticationService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -14,10 +16,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/v1/auth")
@@ -25,6 +24,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class AuthController {
 
     private final AuthenticationService authenticationService;
+    private final IUserHandler userHandler;
 
     private final IClientHandler clientHandler;
     @Operation(
@@ -49,6 +49,16 @@ public class AuthController {
     @PostMapping("/authenticate")
     public ResponseEntity<AuthenticationResponse> authenticate(@RequestBody AuthenticationRequest request){
         return ResponseEntity.ok(authenticationService.authenticate(request));
+    }
+
+    @GetMapping("/findByEmail")
+    public ResponseEntity<User> getUserById(@RequestParam String email){
+        try {
+            User user = userHandler.getUserByEmail(email);
+            return new ResponseEntity<>(user, HttpStatus.OK);
+        }catch (UserNotFoundException e){
+            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+        }
     }
 
 }
