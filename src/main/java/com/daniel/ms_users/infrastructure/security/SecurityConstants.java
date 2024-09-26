@@ -1,7 +1,9 @@
 package com.daniel.ms_users.infrastructure.security;
 
-public class SecurityConstants {
-    private SecurityConstants(){}
+public final class SecurityConstants {
+
+    private SecurityConstants() {
+    }
 
     public static final String[] WHITE_LIST_URL = {
             "/api/v1/auth/**",

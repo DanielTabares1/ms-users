@@ -1,5 +1,6 @@
 package com.daniel.ms_users.infrastructure.security.jwt;
 
+import com.daniel.ms_users.domain.api.IJwtServicePort;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -18,7 +19,7 @@ import java.util.function.Function;
 
 @Service
 @Transactional
-public class JwtService {
+public class JwtService implements IJwtServicePort {
     @Value("${spring.security.key}")
     private String securityKey;
 
