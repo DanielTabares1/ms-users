@@ -6,7 +6,6 @@ import com.daniel.ms_users.application.dto.ClientRequest;
 import com.daniel.ms_users.application.handler.IClientHandler;
 import com.daniel.ms_users.application.handler.IUserHandler;
 import com.daniel.ms_users.domain.model.User;
-import com.daniel.ms_users.domain.exception.UserNotFoundException;
 import com.daniel.ms_users.infrastructure.input.rest.cosntants.ApiEndpoints;
 import com.daniel.ms_users.infrastructure.security.AuthenticationService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -46,20 +45,39 @@ public class AuthController {
         return new ResponseEntity<>(newUser, HttpStatus.CREATED);
     }
 
-
+    @Operation(
+            summary = "Authenticate a user",
+            description = "Allows a user to authenticate using email and password"
+    )
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Authentication successful",
+                    content = @Content(mediaType = "application/json")),
+            @ApiResponse(responseCode = "403", description = "Authentication failed",
+                    content = @Content),
+            @ApiResponse(responseCode = "400", description = "Invalid request data",
+                    content = @Content)
+    })
     @PostMapping("/authenticate")
     public ResponseEntity<AuthenticationResponse> authenticate(@RequestBody AuthenticationRequest request){
         return ResponseEntity.ok(authenticationService.authenticate(request));
     }
 
+    @Operation(
+            summary = "Find user by email",
+            description = "Retrieve a user's information using their email address"
+    )
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "User found",
+                    content = @Content(mediaType = "application/json")),
+            @ApiResponse(responseCode = "404", description = "User not found",
+                    content = @Content),
+            @ApiResponse(responseCode = "400", description = "Invalid request data",
+                    content = @Content)
+    })
     @GetMapping("/findByEmail")
     public ResponseEntity<User> getUserById(@RequestParam String email){
-        try {
-            User user = userHandler.getUserByEmail(email);
-            return new ResponseEntity<>(user, HttpStatus.OK);
-        }catch (UserNotFoundException e){
-            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
-        }
+        User user = userHandler.getUserByEmail(email);
+        return new ResponseEntity<>(user, HttpStatus.OK);
     }
 
 }

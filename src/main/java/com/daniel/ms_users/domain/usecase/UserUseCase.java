@@ -6,10 +6,13 @@ import com.daniel.ms_users.domain.exception.ErrorMessages;
 import com.daniel.ms_users.domain.exception.UserUnderageException;
 import com.daniel.ms_users.domain.model.Role;
 import com.daniel.ms_users.domain.model.User;
+import com.daniel.ms_users.domain.model.UserRoles;
 import com.daniel.ms_users.domain.spi.IRolePersistencePort;
 import com.daniel.ms_users.domain.spi.IUserPersistencePort;
 import com.daniel.ms_users.domain.util.PasswordEncoderUtil;
 import com.daniel.ms_users.domain.util.UserValidations;
+
+import java.util.Objects;
 
 public class UserUseCase implements IUserServicePort {
 
@@ -27,8 +30,8 @@ public class UserUseCase implements IUserServicePort {
 
     @Override
     public User saveUser(User user, String roleName) {
-        if (!userValidations.isAdult(user)) {
-            throw new UserUnderageException(ErrorMessages.USER_UNDERAGE.getMessage());
+        if(Objects.equals(roleName, UserRoles.OWNER.toString()) && !userValidations.isAdult(user)) {
+                throw new UserUnderageException(ErrorMessages.USER_UNDERAGE.getMessage());
         }
         String requestEmail = user.getEmail();
         if (userPersistencePort.existByEmail(requestEmail)) {

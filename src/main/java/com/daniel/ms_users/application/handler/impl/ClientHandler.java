@@ -22,6 +22,6 @@ public class ClientHandler implements IClientHandler {
     @Override
     public User saveClient(ClientRequest clientRequest) {
         User user = clientRequestMapper.toModel(clientRequest);
-        return userServicePort.saveUser(user, UserRoles.CLIENT.name());
+        return userServicePort.saveUser(user, UserRoles.CLIENT.toString());
     }
 }

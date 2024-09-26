@@ -21,7 +21,7 @@ public class OwnerHandler implements IOwnerHandler {
     @Override
     public User saveOwner(OwnerRequest ownerRequest) {
         User user = ownerRequestMapper.toUser(ownerRequest);
-        return userServicePort.saveUser(user, UserRoles.OWNER.name());
+        return userServicePort.saveUser(user, UserRoles.OWNER.toString());
     }
 
 }

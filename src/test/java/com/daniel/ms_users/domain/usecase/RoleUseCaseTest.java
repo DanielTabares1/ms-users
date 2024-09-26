@@ -31,7 +31,7 @@ class RoleUseCaseTest {
     void getRoleByNameReturnsSuccess() {
         //Wanted result for opperation
         Role role = new Role();
-        String roleName = UserRoles.OWNER.name();
+        String roleName = UserRoles.OWNER.toString();
         role.setName(roleName);
 
         when(rolePersistencePort.getRoleByName(anyString())).thenReturn(role);
@@ -47,7 +47,7 @@ class RoleUseCaseTest {
     @Test
     void getRoleByNameReturnsRoleNotFoundException(){
 
-        when(rolePersistencePort.getRoleByName(anyString())).thenThrow(new RoleNotFoundException(ErrorMessages.ROLE_NOT_FOUND.getMessage(UserRoles.OWNER.name())));
+        when(rolePersistencePort.getRoleByName(anyString())).thenThrow(new RoleNotFoundException(ErrorMessages.ROLE_NOT_FOUND.getMessage(UserRoles.OWNER.toString())));
 
 
         assertThrows(RoleNotFoundException.class, () -> roleUseCase.getRoleByName("OWNER"));

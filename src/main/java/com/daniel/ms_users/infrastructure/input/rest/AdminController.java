@@ -4,7 +4,6 @@ import com.daniel.ms_users.application.dto.OwnerRequest;
 import com.daniel.ms_users.application.handler.IOwnerHandler;
 import com.daniel.ms_users.application.handler.IUserHandler;
 import com.daniel.ms_users.domain.model.User;
-import com.daniel.ms_users.domain.exception.UserNotFoundException;
 import com.daniel.ms_users.infrastructure.input.rest.cosntants.ApiEndpoints;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -44,24 +43,36 @@ public class AdminController {
         return new ResponseEntity<>(newUser, HttpStatus.CREATED);
     }
 
+    @Operation(
+            summary = "Get user by ID",
+            description = "Retrieve a user's information using their ID"
+    )
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "User found",
+                    content = @Content(mediaType = "application/json")),
+            @ApiResponse(responseCode = "404", description = "User not found",
+                    content = @Content)
+    })
     @GetMapping("/users/{id}")
     public ResponseEntity<User> getUserById(@PathVariable long id){
-        try {
-            User user = userHandler.getUserById(id);
-            return new ResponseEntity<>(user, HttpStatus.OK);
-        }catch (UserNotFoundException e){
-            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
-        }
+        User user = userHandler.getUserById(id);
+        return new ResponseEntity<>(user, HttpStatus.OK);
     }
 
+    @Operation(
+            summary = "Get user's role by email",
+            description = "Retrieve a user's role using their email address"
+    )
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "User found",
+                    content = @Content(mediaType = "application/json")),
+            @ApiResponse(responseCode = "404", description = "User not found",
+                    content = @Content)
+    })
     @GetMapping("/users/role-by-email/{email}")
     public ResponseEntity<String> getUserByEmail(@PathVariable String email){
-        try {
-            User user = userHandler.getUserByEmail(email);
-            return new ResponseEntity<>(user.getRole().getName(), HttpStatus.OK);
-        }catch (UserNotFoundException e){
-            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
-        }
+        User user = userHandler.getUserByEmail(email);
+        return new ResponseEntity<>(user.getRole().getName(), HttpStatus.OK);
     }
 
 }
