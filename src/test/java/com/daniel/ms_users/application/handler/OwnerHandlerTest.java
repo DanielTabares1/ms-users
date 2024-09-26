@@ -1,11 +1,11 @@
 package com.daniel.ms_users.application.handler;
 
 import com.daniel.ms_users.application.dto.OwnerRequest;
-import com.daniel.ms_users.application.exception.UserUnderageException;
+import com.daniel.ms_users.domain.exception.UserUnderageException;
 import com.daniel.ms_users.application.handler.impl.OwnerHandler;
 import com.daniel.ms_users.application.mapper.IOwnerRequestMapper;
-import com.daniel.ms_users.application.util.PasswordEncoderUtil;
-import com.daniel.ms_users.application.util.UserValidations;
+import com.daniel.ms_users.domain.util.PasswordEncoderUtil;
+import com.daniel.ms_users.domain.util.UserValidations;
 import com.daniel.ms_users.domain.api.IRoleServicePort;
 import com.daniel.ms_users.domain.api.IUserServicePort;
 import com.daniel.ms_users.domain.model.Role;

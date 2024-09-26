@@ -6,7 +6,7 @@ import com.daniel.ms_users.application.dto.ClientRequest;
 import com.daniel.ms_users.application.handler.IClientHandler;
 import com.daniel.ms_users.application.handler.IUserHandler;
 import com.daniel.ms_users.domain.model.User;
-import com.daniel.ms_users.infrastructure.exception.UserNotFoundException;
+import com.daniel.ms_users.domain.exception.UserNotFoundException;
 import com.daniel.ms_users.infrastructure.security.AuthenticationService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;

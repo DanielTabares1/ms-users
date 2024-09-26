@@ -1,7 +1,7 @@
 package com.daniel.ms_users.infrastructure.output.jpa.adapter;
 
 import com.daniel.ms_users.domain.model.Role;
-import com.daniel.ms_users.infrastructure.exception.RoleNotFoundException;
+import com.daniel.ms_users.domain.exception.RoleNotFoundException;
 import com.daniel.ms_users.infrastructure.output.jpa.entity.RoleEntity;
 import com.daniel.ms_users.infrastructure.output.jpa.mapper.RoleEntityMapper;
 import com.daniel.ms_users.infrastructure.output.jpa.repository.IRoleRepository;

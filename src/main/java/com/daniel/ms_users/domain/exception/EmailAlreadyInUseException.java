@@ -1,4 +1,4 @@
-package com.daniel.ms_users.application.exception;
+package com.daniel.ms_users.domain.exception;
 
 public class EmailAlreadyInUseException extends RuntimeException{
     public EmailAlreadyInUseException(String message){

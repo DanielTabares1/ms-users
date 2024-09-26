@@ -4,7 +4,7 @@ import com.daniel.ms_users.application.dto.OwnerRequest;
 import com.daniel.ms_users.application.handler.IOwnerHandler;
 import com.daniel.ms_users.application.handler.IUserHandler;
 import com.daniel.ms_users.domain.model.User;
-import com.daniel.ms_users.infrastructure.exception.UserNotFoundException;
+import com.daniel.ms_users.domain.exception.UserNotFoundException;
     import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;

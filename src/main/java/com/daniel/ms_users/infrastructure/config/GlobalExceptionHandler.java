@@ -1,7 +1,8 @@
-package com.daniel.ms_users.infrastructure.exception;
+package com.daniel.ms_users.infrastructure.config;
 
-import com.daniel.ms_users.application.exception.EmailAlreadyInUseException;
-import com.daniel.ms_users.application.exception.UserUnderageException;
+import com.daniel.ms_users.domain.exception.EmailAlreadyInUseException;
+import com.daniel.ms_users.domain.exception.UserUnderageException;
+import com.daniel.ms_users.domain.exception.UserNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;

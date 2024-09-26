@@ -1,4 +1,4 @@
-package com.daniel.ms_users.application.util;
+package com.daniel.ms_users.domain.util;
 
 import com.daniel.ms_users.domain.model.User;
 

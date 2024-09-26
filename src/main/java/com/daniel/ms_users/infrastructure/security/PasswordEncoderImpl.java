@@ -1,6 +1,6 @@
 package com.daniel.ms_users.infrastructure.security;
 
-import com.daniel.ms_users.application.util.PasswordEncoderUtil;
+import com.daniel.ms_users.domain.util.PasswordEncoderUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 

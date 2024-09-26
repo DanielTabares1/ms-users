@@ -3,7 +3,7 @@ package com.daniel.ms_users.application.handler;
 import com.daniel.ms_users.application.dto.ClientRequest;
 import com.daniel.ms_users.application.handler.impl.ClientHandler;
 import com.daniel.ms_users.application.mapper.IClientRequestMapper;
-import com.daniel.ms_users.application.util.PasswordEncoderUtil;
+import com.daniel.ms_users.domain.util.PasswordEncoderUtil;
 import com.daniel.ms_users.domain.api.IRoleServicePort;
 import com.daniel.ms_users.domain.api.IUserServicePort;
 import com.daniel.ms_users.domain.model.Role;

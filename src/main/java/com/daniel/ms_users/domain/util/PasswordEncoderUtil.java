@@ -1,4 +1,4 @@
-package com.daniel.ms_users.application.util;
+package com.daniel.ms_users.domain.util;
 
 public interface PasswordEncoderUtil {
     String encode(String rawPassword);

@@ -1,8 +1,8 @@
 package com.daniel.ms_users.infrastructure.config;
 
-import com.daniel.ms_users.application.util.PasswordEncoderUtil;
-import com.daniel.ms_users.application.util.impl.UserValidationImpl;
-import com.daniel.ms_users.application.util.UserValidations;
+import com.daniel.ms_users.domain.util.PasswordEncoderUtil;
+import com.daniel.ms_users.domain.util.impl.UserValidationImpl;
+import com.daniel.ms_users.domain.util.UserValidations;
 import com.daniel.ms_users.domain.api.IRoleServicePort;
 import com.daniel.ms_users.domain.api.IUserServicePort;
 import com.daniel.ms_users.domain.spi.IRolePersistencePort;
@@ -39,7 +39,7 @@ public class BeanConfiguration {
 
     @Bean
     public IUserServicePort userServicePort() {
-        return new UserUseCase(userPersistencePort());
+        return new UserUseCase(userPersistencePort(), userValidations(), passwordEncoderUtil(), rolePersistencePort());
     }
 
     @Bean
