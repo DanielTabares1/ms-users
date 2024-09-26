@@ -2,10 +2,10 @@ package com.daniel.ms_users.infrastructure.security;
 
 import com.daniel.ms_users.application.dto.AuthenticationRequest;
 import com.daniel.ms_users.application.dto.AuthenticationResponse;
+import com.daniel.ms_users.domain.api.IJwtServicePort;
 import com.daniel.ms_users.domain.exception.ErrorMessages;
 import com.daniel.ms_users.infrastructure.output.jpa.entity.UserEntity;
 import com.daniel.ms_users.infrastructure.output.jpa.repository.IUserRepository;
-import com.daniel.ms_users.infrastructure.security.jwt.JwtService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -25,7 +25,7 @@ public class AuthenticationService {
 
     private final AuthenticationManager authenticationManager;
 
-    private final JwtService jwtService;
+    private final IJwtServicePort jwtService;
 
     public AuthenticationResponse authenticate(AuthenticationRequest request) {
         authenticationManager.authenticate(

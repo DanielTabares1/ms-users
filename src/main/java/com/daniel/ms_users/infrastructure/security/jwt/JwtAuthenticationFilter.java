@@ -1,5 +1,6 @@
 package com.daniel.ms_users.infrastructure.security.jwt;
 
+import com.daniel.ms_users.domain.api.IJwtServicePort;
 import com.daniel.ms_users.infrastructure.security.SecurityConstants;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -24,7 +25,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
-    private final JwtService jwtService;
+    private final IJwtServicePort jwtService;
     private final UserDetailsService userDetailsService;
 
     private final List<String> excludedPrefixes = Arrays.asList(SecurityConstants.WHITE_LIST_URL);
