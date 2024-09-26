@@ -1,5 +1,6 @@
 package com.daniel.ms_users.infrastructure.security.config;
 
+import com.daniel.ms_users.domain.exception.ErrorMessages;
 import com.daniel.ms_users.infrastructure.output.jpa.repository.IUserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -22,7 +23,7 @@ public class SecurityBeanConfig {
     @Bean
     public UserDetailsService userDetailsService() {
         return username -> userRepository.findByEmail(username).orElseThrow(
-                () -> new UsernameNotFoundException("User not found with email" + username));
+                () -> new UsernameNotFoundException(ErrorMessages.USER_NOT_FOUND_BY_EMAIL.getMessage(username)));
     }
 
     @Bean

@@ -7,6 +7,7 @@ import com.daniel.ms_users.application.handler.IClientHandler;
 import com.daniel.ms_users.application.handler.IUserHandler;
 import com.daniel.ms_users.domain.model.User;
 import com.daniel.ms_users.domain.exception.UserNotFoundException;
+import com.daniel.ms_users.infrastructure.input.rest.cosntants.ApiEndpoints;
 import com.daniel.ms_users.infrastructure.security.AuthenticationService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -19,7 +20,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/v1/auth")
+@RequestMapping(ApiEndpoints.AUTH_API)
 @RequiredArgsConstructor
 public class AuthController {
 

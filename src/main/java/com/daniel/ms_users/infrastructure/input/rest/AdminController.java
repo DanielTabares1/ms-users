@@ -5,7 +5,8 @@ import com.daniel.ms_users.application.handler.IOwnerHandler;
 import com.daniel.ms_users.application.handler.IUserHandler;
 import com.daniel.ms_users.domain.model.User;
 import com.daniel.ms_users.domain.exception.UserNotFoundException;
-    import io.swagger.v3.oas.annotations.Operation;
+import com.daniel.ms_users.infrastructure.input.rest.cosntants.ApiEndpoints;
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
@@ -17,7 +18,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/v1/admin")
+@RequestMapping(ApiEndpoints.ADMIN_API)
 @RequiredArgsConstructor
 public class AdminController {
 

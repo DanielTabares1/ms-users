@@ -3,6 +3,7 @@ package com.daniel.ms_users.infrastructure.input.rest;
 import com.daniel.ms_users.application.dto.EmployeeRequest;
 import com.daniel.ms_users.application.handler.IEmployeeHandler;
 import com.daniel.ms_users.domain.model.User;
+import com.daniel.ms_users.infrastructure.input.rest.cosntants.ApiEndpoints;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -18,7 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/v1/owner")
+@RequestMapping(ApiEndpoints.OWNER_API)
 public class OwnerController {
 
     private final IEmployeeHandler employeeHandler;

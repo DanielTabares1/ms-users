@@ -12,7 +12,7 @@ import java.util.Date;
 import java.util.List;
 
 @Entity
-@Table(name = "user")
+@Table(name = EntityConstants.USER_TABLE_NAME)
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
@@ -30,7 +30,7 @@ public class UserEntity implements UserDetails {
     private String password;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "role_id", nullable = false)
+    @JoinColumn(name = EntityConstants.ROLE_COLUMN_NAME, nullable = false)
     private RoleEntity role;
 
     @Override

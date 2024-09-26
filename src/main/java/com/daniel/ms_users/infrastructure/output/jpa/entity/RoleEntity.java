@@ -9,7 +9,7 @@ import org.springframework.security.core.GrantedAuthority;
 
 
 @Entity
-@Table(name = "role")
+@Table(name = EntityConstants.ROLE_TABLE_NAME)
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
@@ -23,6 +23,6 @@ public class RoleEntity implements GrantedAuthority {
 
     @Override
     public String getAuthority() {
-        return "ROLE_" + this.name;
+        return EntityConstants.ROLE_PREFIX + this.name;
     }
 }
