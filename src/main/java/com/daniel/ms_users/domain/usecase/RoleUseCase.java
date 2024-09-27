@@ -1,6 +1,8 @@
 package com.daniel.ms_users.domain.usecase;
 
 import com.daniel.ms_users.domain.api.IRoleServicePort;
+import com.daniel.ms_users.domain.exception.ErrorMessages;
+import com.daniel.ms_users.domain.exception.RoleNotFoundException;
 import com.daniel.ms_users.domain.model.Role;
 import com.daniel.ms_users.domain.spi.IRolePersistencePort;
 
@@ -14,6 +16,8 @@ public class RoleUseCase implements IRoleServicePort {
 
     @Override
     public Role getRoleByName(String name) {
-        return rolePersistencePort.getRoleByName(name);
+        return rolePersistencePort.getRoleByName(name).orElseThrow(
+                () -> new RoleNotFoundException(ErrorMessages.ROLE_NOT_FOUND.getMessage(name))
+        );
     }
 }

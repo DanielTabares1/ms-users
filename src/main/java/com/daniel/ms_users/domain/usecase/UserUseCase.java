@@ -1,9 +1,7 @@
 package com.daniel.ms_users.domain.usecase;
 
 import com.daniel.ms_users.domain.api.IUserServicePort;
-import com.daniel.ms_users.domain.exception.EmailAlreadyInUseException;
-import com.daniel.ms_users.domain.exception.ErrorMessages;
-import com.daniel.ms_users.domain.exception.UserUnderageException;
+import com.daniel.ms_users.domain.exception.*;
 import com.daniel.ms_users.domain.model.Role;
 import com.daniel.ms_users.domain.model.User;
 import com.daniel.ms_users.domain.model.UserRoles;
@@ -37,7 +35,9 @@ public class UserUseCase implements IUserServicePort {
         if (userPersistencePort.existByEmail(requestEmail)) {
             throw new EmailAlreadyInUseException(ErrorMessages.EMAIL_ALREADY_IN_USE.getMessage(requestEmail));
         }
-        Role role = rolePersistencePort.getRoleByName(roleName);
+        Role role = rolePersistencePort.getRoleByName(roleName).orElseThrow(
+                () -> new RoleNotFoundException(ErrorMessages.ROLE_NOT_FOUND.getMessage(roleName))
+        );
         user.setRole(role);
         user.setPassword(passwordEncoderUtil.encode(user.getPassword()));
         return userPersistencePort.saveUser(user);
@@ -45,7 +45,9 @@ public class UserUseCase implements IUserServicePort {
 
     @Override
     public User getUserById(Long id) {
-        return userPersistencePort.getUserById(id);
+        return userPersistencePort.getUserById(id).orElseThrow(
+                () -> new UserNotFoundException(ErrorMessages.USER_NOT_FOUND.getMessage(id))
+        );
     }
 
     @Override
@@ -55,6 +57,8 @@ public class UserUseCase implements IUserServicePort {
 
     @Override
     public User getUserByEmail(String email) {
-        return userPersistencePort.getUserByEmail(email);
+        return userPersistencePort.getUserByEmail(email).orElseThrow(
+                () -> new UserNotFoundException(ErrorMessages.USER_NOT_FOUND_BY_EMAIL.getMessage(email))
+        );
     }
 }

@@ -2,6 +2,8 @@ package com.daniel.ms_users.domain.spi;
 
 import com.daniel.ms_users.domain.model.Role;
 
+import java.util.Optional;
+
 public interface IRolePersistencePort {
-    Role getRoleByName(String name);
+    Optional<Role> getRoleByName(String name);
 }

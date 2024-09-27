@@ -10,6 +10,8 @@ import com.daniel.ms_users.infrastructure.output.jpa.repository.IUserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
+import java.util.Optional;
+
 @RequiredArgsConstructor
 public class UserJpaAdapter implements IUserPersistencePort {
 
@@ -23,11 +25,10 @@ public class UserJpaAdapter implements IUserPersistencePort {
     }
 
     @Override
-    public User getUserById(Long id) {
-        UserEntity userEntity = userRepository.findById(id).orElseThrow(
-                () -> new UserNotFoundException(ErrorMessages.USER_NOT_FOUND.getMessage(id))
+    public Optional<User> getUserById(Long id) {
+        return userRepository.findById(id).map(
+                userEntityMapper::toUser
         );
-        return userEntityMapper.toUser(userEntity);
     }
 
     @Override
@@ -36,9 +37,9 @@ public class UserJpaAdapter implements IUserPersistencePort {
     }
 
     @Override
-    public User getUserByEmail(String email) {
-        UserEntity userEntity = userRepository.findByEmail(email).
-                orElseThrow(() -> new UsernameNotFoundException(ErrorMessages.USER_NOT_FOUND_BY_EMAIL.getMessage(email)));
-        return userEntityMapper.toUser(userEntity);
+    public Optional<User> getUserByEmail(String email) {
+        return userRepository.findByEmail(email).map(
+                userEntityMapper::toUser
+        );
     }
 }
