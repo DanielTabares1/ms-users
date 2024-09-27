@@ -2,6 +2,7 @@ package com.daniel.ms_users.infrastructure.security;
 
 public final class SecurityConstants {
 
+
     private SecurityConstants() {
     }
 
@@ -17,10 +18,13 @@ public final class SecurityConstants {
     public static final String ADMIN_API = "/api/v1/admin/**";
     public static final String OWNER_API = "/api/v1/owner/**";
     public static final String CLIENT_API = "/api/v1/client/**";
+    public static final String EMPLOYEE_API = "/api/v1/employee/**";
 
     public static final String ADMIN_ROLE = "ADMIN";
     public static final String OWNER_ROLE = "OWNER";
     public static final String CLIENT_ROLE = "CLIENT";
+    public static final String EMPLOYEE_ROLE = "EMPLOYEE" ;
+
 
     public static final String ROLE_NAME_CLAIM = "roleName";
 
