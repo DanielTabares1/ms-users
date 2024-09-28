@@ -2,7 +2,6 @@ package com.daniel.ms_users.application.handler;
 
 import com.daniel.ms_users.application.handler.impl.UserHandler;
 import com.daniel.ms_users.domain.api.IUserServicePort;
-import com.daniel.ms_users.domain.model.Role;
 import com.daniel.ms_users.domain.model.User;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -10,9 +9,8 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-import java.util.Calendar;
-import java.util.Date;
 
+import static com.daniel.ms_users.TestConstants.*;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
@@ -25,33 +23,29 @@ class UserHandlerTest {
     private IUserServicePort userServicePort;
 
     @BeforeEach
-    void setUp(){
+    void setUp() {
         MockitoAnnotations.openMocks(this);
     }
 
     @Test
-    void getUserByIdReturnsSuccess() {
-       User user = new User(
-               7L,
-               "Daniel",
-               "Tabares",
-               "1007480705",
-               "+3222574446",
-               new Date(2001, Calendar.OCTOBER,13),
-               "daniel.tabares@pragma.com.co",
-               "$2a$10$rKPEB3J.6k5hpbxWnxQFvuJU8XU0E0OZs9sOhIux08XkiXUnUwfTO",
-               new Role(3l, "ADMIN", "El dueño de todo")
-       );
+    void getUserById_ShouldReturnUser() {
+        when(userServicePort.getUserById(anyLong())).thenReturn(USER_CLIENT);
 
-       when(userServicePort.getUserById(7L)).thenReturn(user);
+        User result = userHandler.getUserById(USER_ID);
 
-       User result = userHandler.getUserById(7L);
+        verify(userServicePort).getUserById(USER_ID);
 
-       assertNotNull(result);
-       assertEquals(result.getId(), user.getId());
-       assertEquals(result.getRole(), user.getRole());
-       assertEquals(result.getEmail(), user.getEmail());
+        assertEquals(USER_CLIENT, result);
+    }
 
-       verify(userServicePort, times(1)).getUserById(7L);
+    @Test
+    void getUserByEmail_ShouldReturnUser() {
+        when(userServicePort.getUserByEmail(anyString())).thenReturn(USER_CLIENT);
+
+        User result = userHandler.getUserByEmail(EMAIL);
+
+        verify(userServicePort).getUserByEmail(EMAIL);
+
+        assertEquals(USER_CLIENT, result);
     }
 }

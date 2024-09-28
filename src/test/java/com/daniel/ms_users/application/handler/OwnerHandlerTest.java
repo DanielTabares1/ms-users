@@ -1,24 +1,21 @@
 package com.daniel.ms_users.application.handler;
 
 import com.daniel.ms_users.application.dto.OwnerRequest;
-import com.daniel.ms_users.domain.exception.UserUnderageException;
 import com.daniel.ms_users.application.handler.impl.OwnerHandler;
 import com.daniel.ms_users.application.mapper.IOwnerRequestMapper;
-import com.daniel.ms_users.domain.util.PasswordEncoderUtil;
-import com.daniel.ms_users.domain.util.UserValidations;
-import com.daniel.ms_users.domain.api.IRoleServicePort;
 import com.daniel.ms_users.domain.api.IUserServicePort;
-import com.daniel.ms_users.domain.model.Role;
+
 import com.daniel.ms_users.domain.model.User;
+import com.daniel.ms_users.domain.model.UserRoles;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-import java.util.Calendar;
 import java.util.Date;
 
+import static com.daniel.ms_users.TestConstants.*;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
@@ -31,79 +28,33 @@ class OwnerHandlerTest {
     private IUserServicePort userServicePort;
 
     @Mock
-    private IRoleServicePort roleServicePort;
+    private IOwnerRequestMapper ownerRequestMapper;
 
-    @Mock
-    private IOwnerRequestMapper IOwnerRequestMapper;
 
-    @Mock
-    private UserValidations userValidations;
+    private OwnerRequest ownerRequest;
+    private User user;
 
-    @Mock
-    private PasswordEncoderUtil passwordEncoderUtil;
 
     @BeforeEach
     void setUp(){
         MockitoAnnotations.openMocks(this);
+        ownerRequest = new OwnerRequest(NAME, LAST_NAME, DOCUMENT_NUMBER, CELLPHONE, new Date(), EMAIL, PASSWORD);
+        user = USER_CLIENT;
     }
+
 
     @Test
     void saveOwner() {
-        OwnerRequest ownerRequest = new OwnerRequest("Daniel", "Tabares", "1007480705", "3222574446",
-                new Date(2001, Calendar.OCTOBER, 13), "daniel.tabares@pragma.com.co", "password");
+        when(ownerRequestMapper.toUser(any(OwnerRequest.class))).thenReturn(user);
+        when(userServicePort.saveUser(any(User.class), eq(UserRoles.OWNER.toString()))).thenReturn(user);
 
-        Role ownerRole = new Role(1L, "OWNER", "El dueño de un negocio");
-        User user = new User(null, "Daniel", "Tabares", "1007480705", "3222574446",
-                new Date(2001 , Calendar.OCTOBER, 13), "daniel.tabares@pragma.com.co", "encodedPassword", ownerRole);
+        User result = ownerHandler.saveOwner(ownerRequest);
 
-        // Mockear comportamientos
-        when(roleServicePort.getRoleByName("OWNER")).thenReturn(ownerRole); // Obtener el rol OWNER
-        when(passwordEncoderUtil.encode(user.getPassword())).thenReturn("encodedPassword"); // Simula el encriptado de la contraseña
-        when(IOwnerRequestMapper.toUser(ownerRequest)).thenReturn(user); // Convertir el OwnerRequest a User
-        when(userValidations.isAdult(user)).thenReturn(true); // Validaciones del usuario (si no lanza excepciones)
-        when(userServicePort.saveUser(user)).thenReturn(user);
+        verify(ownerRequestMapper).toUser(ownerRequest);
+        verify(userServicePort).saveUser(user, UserRoles.OWNER.toString());
 
-        // Ejecutar el método a probar
-        ownerHandler.saveOwner(ownerRequest);
-
-        // Verificaciones
-        verify(roleServicePort, times(1)).getRoleByName("OWNER");
-        verify(passwordEncoderUtil, times(1)).encode(user.getPassword());
-        verify(IOwnerRequestMapper, times(1)).toUser(ownerRequest);
-        verify(userValidations, times(1)).isAdult(user);
-        verify(userServicePort, times(1)).saveUser(user);
-
-        // Verificar que el role y la password se setearon correctamente en el User
-        assertEquals("encodedPassword", user.getPassword());
-        assertEquals(ownerRole, user.getRole());
+        assertEquals(user, result);
     }
 
-    @Test
-    void saveOwnerThrowsUserUnderageException() {
-        OwnerRequest ownerRequest = new OwnerRequest("Daniel", "Tabares", "1007480705", "3222574446",
-                new Date(2008, Calendar.OCTOBER, 13), "daniel.tabares@pragma.com.co", "password");
 
-        Role ownerRole = new Role(1L, "OWNER", "El dueño de un negocio");
-        User user = new User(null, "Daniel", "Tabares", "1007480705", "3222574446",
-                new Date(2008 , Calendar.OCTOBER, 13), "daniel.tabares@pragma.com.co", "encodedPassword", ownerRole);
-
-        // Mockear comportamientos
-        when(roleServicePort.getRoleByName("OWNER")).thenReturn(ownerRole); // Obtener el rol OWNER
-        when(passwordEncoderUtil.encode(user.getPassword())).thenReturn("encodedPassword"); // Simula el encriptado de la contraseña
-        when(IOwnerRequestMapper.toUser(ownerRequest)).thenReturn(user); // Convertir el OwnerRequest a User
-        when(userValidations.isAdult(user)).thenReturn(false); // Simular que el usuario no es adulto
-
-
-        // Ejecutar el método a probar y capturar la excepción
-        assertThrows(UserUnderageException.class, () -> {
-            ownerHandler.saveOwner(ownerRequest);
-        });
-
-        // Verificaciones
-        verify(roleServicePort, times(1)).getRoleByName("OWNER");
-        verify(IOwnerRequestMapper, times(1)).toUser(ownerRequest);
-        verify(userValidations, times(1)).isAdult(user);
-        verify(passwordEncoderUtil, never()).encode(user.getPassword());
-        verify(userServicePort, never()).saveUser(user); // Verificar que nunca se guarda el usuario, ya que es menor de edad
-    }
 }

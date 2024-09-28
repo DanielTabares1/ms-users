@@ -1,5 +1,6 @@
 package com.daniel.ms_users.domain.usecase;
 
+import com.daniel.ms_users.TestConstants;
 import com.daniel.ms_users.domain.exception.ErrorMessages;
 import com.daniel.ms_users.domain.model.Role;
 import com.daniel.ms_users.domain.model.UserRoles;
@@ -11,12 +12,16 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
+import java.util.Optional;
+
+import static com.daniel.ms_users.TestConstants.ROLE_ADMIN;
+import static com.daniel.ms_users.TestConstants.ROLE_NAME_ADMIN;
 import static org.mockito.Mockito.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 class RoleUseCaseTest {
 
-    @InjectMocks
+     @InjectMocks
     private RoleUseCase roleUseCase;
 
     @Mock
@@ -29,30 +34,27 @@ class RoleUseCaseTest {
 
     @Test
     void getRoleByNameReturnsSuccess() {
-        //Wanted result for opperation
-        Role role = new Role();
-        String roleName = UserRoles.OWNER.toString();
-        role.setName(roleName);
 
-        when(rolePersistencePort.getRoleByName(anyString())).thenReturn(role);
+        when(rolePersistencePort.getRoleByName(ROLE_NAME_ADMIN)).thenReturn(Optional.of(ROLE_ADMIN));
 
-        Role roleResult = roleUseCase.getRoleByName(roleName);
+        Role roleResult = roleUseCase.getRoleByName(ROLE_NAME_ADMIN);
+
 
         assertNotNull(roleResult);
-        assertEquals("OWNER", roleResult.getName());
-
-        verify(rolePersistencePort, times(1)).getRoleByName(roleName);
+        assertEquals(ROLE_NAME_ADMIN, roleResult.getName());
+        verify(rolePersistencePort, times(1)).getRoleByName(ROLE_NAME_ADMIN);
     }
 
     @Test
     void getRoleByNameReturnsRoleNotFoundException(){
 
-        when(rolePersistencePort.getRoleByName(anyString())).thenThrow(new RoleNotFoundException(ErrorMessages.ROLE_NOT_FOUND.getMessage(UserRoles.OWNER.toString())));
+        when(rolePersistencePort.getRoleByName(ROLE_NAME_ADMIN)).thenReturn(Optional.empty());
 
 
-        assertThrows(RoleNotFoundException.class, () -> roleUseCase.getRoleByName("OWNER"));
+        RoleNotFoundException exception = assertThrows(RoleNotFoundException.class,
+                () -> roleUseCase.getRoleByName(ROLE_NAME_ADMIN));
 
-
-        verify(rolePersistencePort, times(1)).getRoleByName("OWNER");
+        assertEquals(ErrorMessages.ROLE_NOT_FOUND.getMessage(ROLE_NAME_ADMIN), exception.getMessage());
+        verify(rolePersistencePort, times(1)).getRoleByName(ROLE_NAME_ADMIN);
     }
 }

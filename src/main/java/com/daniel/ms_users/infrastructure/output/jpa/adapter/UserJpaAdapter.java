@@ -1,14 +1,11 @@
 package com.daniel.ms_users.infrastructure.output.jpa.adapter;
 
-import com.daniel.ms_users.domain.exception.ErrorMessages;
 import com.daniel.ms_users.domain.model.User;
 import com.daniel.ms_users.domain.spi.IUserPersistencePort;
-import com.daniel.ms_users.domain.exception.UserNotFoundException;
 import com.daniel.ms_users.infrastructure.output.jpa.entity.UserEntity;
 import com.daniel.ms_users.infrastructure.output.jpa.mapper.UserEntityMapper;
 import com.daniel.ms_users.infrastructure.output.jpa.repository.IUserRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 import java.util.Optional;
 
